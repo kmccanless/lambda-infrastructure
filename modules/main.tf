@@ -3,6 +3,12 @@ data "aws_caller_identity" "current" {}
 locals {
   account_id = data.aws_caller_identity.current.account_id
 }
+resource "aws_s3_bucket_object" "object" {
+  bucket = aws_s3_bucket.lambda_asset_bucket.id
+  key    = "temperatures.json"
+  source = "${path.module}/temperatures.json"
+  etag   = filemd5("${path.module}/temperatures.json")
+}
 resource "aws_s3_bucket" "lambda_bucket" {
   force_destroy = true
   bucket = var.s3_bucket
