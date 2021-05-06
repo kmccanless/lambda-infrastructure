@@ -37,8 +37,7 @@ resource "aws_iam_group_membership" "lambda-developers-add" {
   name = "lambda-${var.environment}-developers"
 
   users = [
-    aws_iam_user.lambda-developer.name,
-    "circleci"
+    aws_iam_user.lambda-developer.name
   ]
 
   group = aws_iam_group.lambda-developers.name
@@ -60,6 +59,12 @@ data "aws_iam_policy_document" "lambda_developer_policy_document" {
       "lambda:*"
     ]
     resources = ["arn:aws:lambda:${var.env_regions["${var.environment}"]}:*:function:*"]
+  }
+  statement {
+    actions = [
+    "codedeploy:DescribeParameters"
+    ]
+    resources = ["*"]
   }
   statement {
     actions = [
