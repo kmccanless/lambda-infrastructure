@@ -13,3 +13,6 @@ output "developer_access_key" {
 output "developer_access_secret" {
   value = aws_iam_access_key.lambda-developers-key.secret
 }
+output "region"{
+  value = var.region
+}

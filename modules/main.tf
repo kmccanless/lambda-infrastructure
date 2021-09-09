@@ -2,6 +2,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   account_id = data.aws_caller_identity.current.account_id
+  deployed_region = "${var.env_regions["${var.environment}"]}"
 }
 resource "aws_s3_bucket_object" "object" {
   bucket = aws_s3_bucket.lambda_asset_bucket.id
